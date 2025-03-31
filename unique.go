@@ -121,6 +121,7 @@ func generateRestockReport(unavailable []Product, uniqueData []UniqueAvailabilit
 	defer file.Close()
 
 	writer := csv.NewWriter(file)
+	writer.Comma = ';'
 	defer writer.Flush()
 
 	writer.Write([]string{"Original Name", "Matched Unique Name", "Catalog Number", "URL", "Availability"})
