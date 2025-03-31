@@ -1,0 +1,5 @@
+build for windows: 
+GOOS=windows GOARCH=amd64 go build -o Gruzapp.exe
+
+no debug: 
+GOOS=windows GOARCH=amd64 go build -ldflags="-s -w" -o Gruzapp.exe
