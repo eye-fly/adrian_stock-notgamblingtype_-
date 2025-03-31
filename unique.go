@@ -39,10 +39,9 @@ func parseSearchResultsFromWeb(url string) ([]UniqueAvailability, error) {
 		var stop = false
 		if n.Type == html.ElementNode && n.Data == "tr" {
 			for _, attr := range n.Attr {
-				if attr.Key == "class" && strings.HasPrefix(attr.Val, "Availability") {
+				if attr.Key == "class" && strings.HasPrefix(attr.Val, "Availability") && !containsText(n, "Pokaż opcje") {
 					processNode(n, &results)
 					stop = true
-					break
 				}
 			}
 		}
@@ -63,6 +62,24 @@ func parseSearchResultsFromWeb(url string) ([]UniqueAvailability, error) {
 
 	return results, nil
 }
+func containsText(n *html.Node, target string) bool {
+	var found bool
+
+	var walk func(*html.Node)
+	walk = func(n *html.Node) {
+		if n.Type == html.TextNode && strings.Contains(strings.ToLower(n.Data), strings.ToLower(target)) {
+			found = true
+			return
+		}
+		for c := n.FirstChild; c != nil && !found; c = c.NextSibling {
+			walk(c)
+		}
+	}
+
+	walk(n)
+	return found
+}
+
 func processNode(n *html.Node, results *[]UniqueAvailability) {
 	var name, availability, katalog, link string
 

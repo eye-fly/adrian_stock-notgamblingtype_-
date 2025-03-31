@@ -49,8 +49,9 @@ func main() {
 
 	fmt.Printf("🛠️ Checking availability for %d products...\n", len(allProducts))
 
-	// allProducts[0].URL = "https://fotelewarszawa.pl/fotele-biurowe/909-patron-fotel-biurowy-.html"
-	// allProducts[0].Name = "PATRON fotel biurowy"
+	allProducts[0].URL = "https://fotelewarszawa.pl/fotele-biurowe/909-patron-fotel-biurowy-.html"
+	allProducts[0].Name = "Ares Fotel gabinetowy skóra naturalna 2 kolory"
+	allProducts = allProducts[:10]
 	for i := range allProducts {
 		allProducts[i].Available = checkAvailability(allProducts[i].URL)
 		totalChecked++
